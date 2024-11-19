@@ -1,0 +1,150 @@
+﻿<UserControl x:Class="stock_price_prediction.View.PricePrediction"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:stock_price_prediction.ViewModel"
+             mc:Ignorable="d"
+             d:DesignHeight="800"
+             d:DesignWidth="980"
+             Style="{StaticResource Page_Style}">
+
+    <Border BorderBrush="White" BorderThickness="2">
+        <Grid>
+            <Label Content="Stock price monitoring" FontWeight="Bold" HorizontalAlignment="Left" FontSize="40" Foreground="White" Margin="295,7,0,0" VerticalAlignment="Top" Width="415"/>
+
+            <!-- Кнопка для відображення графіку -->
+            <Label Content="Plot" HorizontalAlignment="Left" FontSize="20" Foreground="White" Margin="733,98,0,0" VerticalAlignment="Top" Width="55"/>
+            <Button Margin="572,138,23,503" 
+                Background="{Binding ImagePeriodPrice, Converter={StaticResource BitmapImageToBrushConverter}}" 
+                BorderBrush="White"
+                BorderThickness="2"
+                Command="{Binding ShowPeriodGraphCommand}"/>
+
+            <!-- Вибір компанії -->
+            <Label Content="Company" HorizontalAlignment="Left" FontSize="20" Foreground="White" Margin="208,103,0,0" VerticalAlignment="Top" Width="98"/>
+            <ComboBox ItemsSource="{Binding Companies}" 
+                  SelectedItem="{Binding SelectedCompany, Mode=TwoWay}"  
+                  Style="{StaticResource ComboBoxStyle}" 
+                  Margin="23,140,0,0" Width="465" Height="40">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Company}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <!-- Вибір дати -->
+            <Label Content="Start Date" HorizontalAlignment="Left" FontSize="20" Foreground="White" Margin="125,193,0,0" VerticalAlignment="Top" Width="98"/>
+            <ComboBox ItemsSource="{Binding StartDateOptions}" 
+                  SelectedItem="{Binding StartDate, Mode=TwoWay}"  
+                  Style="{StaticResource ComboBoxStyle}" 
+                  Margin="88,231,0,0" Width="175">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding StringFormat='{}{0:yyyy:dd:MM}'}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <!-- Відображення дати закінчення -->
+            <Label Content="- - -" HorizontalAlignment="Left" FontSize="20" Foreground="#FF00FFF9" Margin="270,233,0,0" VerticalAlignment="Top" Width="53"/>
+            <Label Content="End Date" HorizontalAlignment="Left" FontSize="20" Foreground="White" Margin="353,198,0,0" VerticalAlignment="Top" Width="98"/>
+            <ComboBox ItemsSource="{Binding EndDateOptions}" 
+                  SelectedItem="{Binding EndDate, Mode=TwoWay}"  
+                  Style="{StaticResource ComboBoxStyle}" 
+                  Margin="323,231,0,0" Width="165">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding StringFormat='{}{0:yyyy:dd:MM}'}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <!-- Прогноз -->
+            <Label Content="Forecast" HorizontalAlignment="Left" FontSize="20" Margin="80,566,0,0" VerticalAlignment="Top" Width="98" Foreground="White"/>
+            <Button Content="◀" Command="{Binding CreatePeriodGraphCommand}" 
+                Style="{StaticResource PageButtonStyle}"  
+                HorizontalAlignment="Left" Margin="23,232,0,0" 
+                VerticalAlignment="Top" Height="38" Width="55"/>
+
+            <Line X1="0" Y1="320" X2="980" Y2="320" Stroke="White" StrokeThickness="2" />
+
+
+
+            <ComboBox 
+            ItemsSource="{Binding ForecastOptions}" 
+            SelectedItem="{Binding SelectedForecastOption, Mode=TwoWay}"  
+            Style="{StaticResource ComboBoxStyle}" 
+            Margin="25,599,0,0" Foreground="White">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Content="Prod" Command="{Binding ForecastCommand}" Style="{StaticResource PageButtonStyle}"  HorizontalAlignment="Left" Margin="25,651,0,0" VerticalAlignment="Top" Height="40" Width="200" />
+
+            <TextBox Text="{Binding tbNameModel, Mode=TwoWay}" Style="{StaticResource TextBox_Style}"  Width="175" Margin="0,388,778,0" MaxLength="30" VerticalAlignment="Top"/>
+
+            <Button Content="Train" Command="{Binding TrainCommand}" Style="{StaticResource PageButtonStyle}"  HorizontalAlignment="Left" Margin="23,423,0,0" VerticalAlignment="Top" Height="40" Width="175" />
+
+
+            <Button Margin="572,368,23,273" 
+                Background="{Binding ImageInfoTrain, Converter={StaticResource BitmapImageToBrushConverter}}" 
+                BorderBrush="White"
+                BorderThickness="2"
+                Command="{Binding InfoTrainCommand}"/>
+            <Label Content="Plot" HorizontalAlignment="Left" FontSize="20" Foreground="White" Margin="728,326,0,0" VerticalAlignment="Top" Width="55"/>
+
+            <Label Content="Model" HorizontalAlignment="Left" FontSize="20" Margin="323,353,0,0" VerticalAlignment="Top" Width="73" Foreground="White"/>
+            <ComboBox ItemsSource="{Binding StockPredictionResult}" 
+          SelectedItem="{Binding SelectedStockPredictionResult, Mode=TwoWay}"  
+          Style="{StaticResource ComboBoxStyle}" 
+          Margin="268,385,0,0" Width="175">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding ModelFilename}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <Label Content="{Binding LoadingText}"
+               FontSize="16"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Margin="23,478,0,0" Foreground="White"
+               
+               />
+            <Label Content="Name new model" FontSize="14" HorizontalAlignment="Left" Margin="54,358,0,0" VerticalAlignment="Top" Foreground="#FFFDFDFD"/>
+            <Label Content="{Binding MinDate}" 
+       FontSize="14" 
+       HorizontalAlignment="Left" 
+       Margin="268,445,0,0" 
+       VerticalAlignment="Top" 
+       Foreground="#FFFDFDFD" />
+
+            <Label Content="{Binding MaxDate}" 
+       FontSize="14" 
+       HorizontalAlignment="Left" 
+       Margin="268,465,0,0" 
+       VerticalAlignment="Top" 
+       Foreground="#FFFDFDFD" />
+
+            <Label Content="{Binding RMSE}" 
+       FontSize="14" 
+       HorizontalAlignment="Left" 
+       Margin="268,485,0,0" 
+       VerticalAlignment="Top" 
+       Foreground="#FFFDFDFD" />
+           
+            <Button Margin="572,583,23,58" 
+                Background="{Binding ImageForecastPrice, Converter={StaticResource BitmapImageToBrushConverter}}" 
+                BorderBrush="White"
+                BorderThickness="2"
+                Command="{Binding ForecastShowImageCommand}"/>
+            <!-- Навчання -->
+        </Grid>
+    </Border>
+
+</UserControl>

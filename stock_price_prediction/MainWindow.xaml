@@ -1,0 +1,78 @@
+﻿<Window x:Class="stock_price_prediction.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Menu="clr-namespace:stock_price_prediction.Utilities"
+        xmlns:local="clr-namespace:stock_price_prediction"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Title="MainWindow" Height="800" Width="1200">
+    <Grid>
+        <!--// Window Border //-->
+        <Border Background="#FF030110"/>
+        <Grid>
+            <!--    Base Grid  -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="213" />
+                <ColumnDefinition Width="980"/>
+            </Grid.ColumnDefinitions>
+
+            <!--    Curent page     -->
+            <Grid Grid.Column="1"
+               VerticalAlignment="Top"
+               Height="800">
+                <ContentControl x:Name="Pages"
+                             Content="{Binding CurrentView}" />
+            </Grid>
+
+            <Grid Background="#FF050015">
+                <StackPanel Width="214"
+                        
+            VerticalAlignment="Top" >
+
+                    <Border Background="#FF3A9CFF"
+            CornerRadius="20,0,0,20" />
+                    <Label Foreground="White" FontSize="25" FontWeight="Black" HorizontalAlignment="Center" Content="Navigation"></Label>
+                    <!-- Home -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+                              Command="{Binding HomeCommand}"
+                              IsChecked="True"
+                              Margin="0 ">
+                        <Grid>
+                            <Image Source="Images/img_home.png"
+                   Style="{StaticResource Image_Style}" />
+                            <TextBlock Text="Home"
+                       Style="{StaticResource Text_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PricePrediction -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}"
+              Command="{Binding PricePredictionCommand}">
+                        <Grid>
+                            <Image Source="Images/img_PricePrediction.png"
+                   Style="{StaticResource Image_Style}" />
+                            <TextBlock Text="Price Prediction"
+                       Style="{StaticResource Text_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+
+
+
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+        <!--    Exit    -->
+        <Button BorderBrush="#FF00101F" BorderThickness="2" Style="{StaticResource ExitApp}"
+      Click="CloseApp_Click">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Images/img_exit.png" Width="20" Height="20" />
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

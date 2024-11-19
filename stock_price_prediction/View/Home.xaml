@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="stock_price_prediction.View.Home"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:stock_price_prediction.ViewModel"
+             xmlns:local="clr-namespace:stock_price_prediction.View"
+             mc:Ignorable="d"
+              d:DesignHeight="800"
+              d:DesignWidth="980"
+             Style="{StaticResource Page_Style}">
+
+    <UserControl.DataContext>
+        <vm:HomeVM />
+    </UserControl.DataContext>
+    <Border BorderBrush="White" BorderThickness="2">
+        <Grid>
+            <Button 
+        Content="{Binding LoadingText}" 
+        Command="{Binding DownloadCommand}" 
+        Style="{StaticResource PageButtonStyle}" 
+        HorizontalAlignment="Left" 
+        Margin="733,208,0,0" 
+        VerticalAlignment="Top" 
+        Height="40" 
+        Width="200" 
+    />
+            <TextBox Text="{Binding InfoText}" 
+                 TextWrapping="Wrap" 
+                 HorizontalAlignment="Center" 
+                 VerticalAlignment="Top" 
+                 Width="960" 
+                 Height="120" 
+                 Margin="0,68,0,0" 
+                 FontSize="17" 
+                 Padding="10" 
+                 BorderBrush="#FFFFF9F9" 
+                 BorderThickness="2"
+                 IsReadOnly="True"
+                 Foreground="White"
+                 Background="{x:Null}"/>
+            <Label Content="YFINANCE" HorizontalAlignment="Left" FontWeight="Black" Margin="413,18,0,0" VerticalAlignment="Top" Height="40" Width="115" Background="{x:Null}" FontSize="18" Foreground="White"/>
+            <Line X1="0" Y1="290" X2="980" Y2="290" Stroke="White" StrokeThickness="2" />
+
+        </Grid>
+
+    </Border>
+</UserControl>

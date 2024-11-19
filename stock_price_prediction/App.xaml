@@ -1,0 +1,24 @@
+﻿<Application x:Class="stock_price_prediction.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:stock_price_prediction"
+             xmlns:converters="clr-namespace:stock_price_prediction.Converters"
+             >
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="Styles/Page.xaml" />
+                <ResourceDictionary Source="Styles/Image.xaml" />
+                <ResourceDictionary Source="Styles/Text.xaml" />
+                <ResourceDictionary Source="Styles/Button.xaml" />
+                <ResourceDictionary Source="Styles/ComboBox.xaml" />
+                <ResourceDictionary Source="Styles/TextBox.xaml" />
+                <ResourceDictionary Source="Utilities/DataTemplate.xaml" />
+
+            </ResourceDictionary.MergedDictionaries>
+            <converters:BitmapImageToBrushConverter x:Key="BitmapImageToBrushConverter"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
