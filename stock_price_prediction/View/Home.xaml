@@ -41,6 +41,8 @@
                  Background="{x:Null}"/>
             <Label Content="YFINANCE" HorizontalAlignment="Left" FontWeight="Black" Margin="413,18,0,0" VerticalAlignment="Top" Height="40" Width="115" Background="{x:Null}" FontSize="18" Foreground="White"/>
             <Line X1="0" Y1="290" X2="980" Y2="290" Stroke="White" StrokeThickness="2" />
+            
+            <Label Content="LSTM" HorizontalAlignment="Left" FontWeight="Black" Margin="438,313,0,0" VerticalAlignment="Top" Height="40" Width="60" Background="{x:Null}" FontSize="18" Foreground="White"/>
 
         </Grid>
 

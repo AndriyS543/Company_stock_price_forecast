@@ -28,15 +28,8 @@ def lstm_prediction(ticker, start_date, end_date, model_filename="lstm_model.h5"
         shape = df.shape[0]
         df_new = df[['Close']]
         dataset = df_new.values
-        train = df_new[:ceil(shape * 0.75)]
-        valid = df_new[ceil(shape * 0.75):]
-
-        print('-----------------------------------------------------------------------------')
-        print('-----------STOCK PRICE PREDICTION BY LONG SHORT TERM MEMORY (LSTM)-----------')
-        print('-----------------------------------------------------------------------------')
-        print('Shape of Training Set', train.shape)
-        print('Shape of Validation Set', valid.shape)
-
+        train = df_new[:ceil(shape * 0.8)]  # Перші 80% даних для тренування
+        valid = df_new[ceil(shape * 0.8):]  # Останні 20% даних для валідації
         # Масштабування даних
         scaler = MinMaxScaler(feature_range=(0, 1))
         scaled_data = scaler.fit_transform(dataset)
@@ -71,42 +64,32 @@ def lstm_prediction(ticker, start_date, end_date, model_filename="lstm_model.h5"
         X_test = np.array(X_test)
         X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
 
-        # Прогнозування на валідаційному наборі
         closing_price = model.predict(X_test)
         closing_price = scaler.inverse_transform(closing_price)
 
-        # RMSE
         rms = np.sqrt(np.mean(np.power((valid['Close'].values - closing_price), 2)))
         print('RMSE value on validation set:', rms)
-        print('-----------------------------------------------------------')
-        print('-----------------------------------------------------------')
 
-        # Відображення результатів
         valid['Predictions'] = closing_price
-       # Налаштування графіку для прогнозу цін акцій із темною темою
-        plt.figure(figsize=(12, 6), facecolor='#001f3f')  # Темносиній фон для всього графіка
+        plt.figure(figsize=(12, 6), facecolor='#001f3f')  
 
-# Темносиній фон для області графіка
         ax = plt.gca()
         ax.set_facecolor('#001f3f')
 
-# Графіки для навчальних, актуальних та прогнозованих даних
-        plt.plot(train['Close'], label='Training Data', color='cyan')        # Блакитний для навчальних даних
-        plt.plot(valid['Close'], label='Actual Data', color='white')         # Білий для актуальних даних
-        plt.plot(valid['Predictions'], label='Predicted Data', color='lime') # Лайм для прогнозованих даних
 
-# Додавання підписів та форматування тексту
+        plt.plot(train['Close'], label='Training Data', color='cyan')        
+        plt.plot(valid['Close'], label='Actual Data', color='white')         
+        plt.plot(valid['Predictions'], label='Predicted Data', color='lime') 
+
         plt.title(f"Stock Price Prediction for {ticker} by LSTM", color='white', size=20)
         plt.xlabel('Date', color='white', size=20)
         plt.ylabel('Stock Price (USD)', color='white', size=20)
 
-# Налаштування легенди
         plt.legend(facecolor='#001f3f', edgecolor='white', labelcolor='white')
         ax.tick_params(colors='white')
-# Налаштування сітки
+
         plt.grid(True, color='gray')
 
-# Зберігання графіку як зображення
         png_filename = os.path.join(os.path.dirname(os.getcwd()), "TrainedModels", "Images", f"{model_filename}.png")
         plt.savefig(png_filename, facecolor='#001f3f')  # Зберігаємо з темносинім фоном
 
@@ -127,7 +110,7 @@ def lstm_prediction(ticker, start_date, end_date, model_filename="lstm_model.h5"
         
 if __name__ == "__main__":
     try:
-        # Отримуємо аргументи з командного рядка
+
         ticker = sys.argv[1]
         start_date = sys.argv[2]
         end_date = sys.argv[3]
